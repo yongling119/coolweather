@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/parentLayout"
+    tools:context="com.yongling.coolweather.MainActivity">
+
+    <TextView
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/updatetime"
+        android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="100dp"
+        android:padding="10dp"
+        android:text="N/A"
+        android:textSize="40sp"/>
+
+    <TextView
+        android:id="@+id/tmpnow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/conditionimageView"
+        android:layout_toEndOf="@+id/city"
+        android:layout_toRightOf="@+id/city"
+        android:padding="10dp"
+        android:text="N/A"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/conditiontxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tmpnow"
+        android:layout_toEndOf="@+id/tmpnow"
+        android:layout_toRightOf="@+id/tmpnow"
+        android:padding="10dp"
+        android:text="N/A"
+        android:textSize="20sp"/>
+
+    <ImageView
+        android:id="@+id/conditionimageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/city"
+        android:layout_toEndOf="@+id/city"
+        android:layout_toRightOf="@+id/city"
+        android:src="@drawable/cond100"/>
+
+    <TextView
+        android:id="@+id/updatetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:text="更新时间"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="140dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
+        android:text="今天"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="140dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginStart="150dp"
+        android:text="明天"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="140dp"
+        android:layout_marginLeft="250dp"
+        android:layout_marginStart="250dp"
+        android:text="后天"/>
+
+    <TextView
+        android:id="@+id/today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginBottom="80dp"
+        android:text="N/A"/>
+
+    <TextView
+        android:id="@+id/tomorrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/textView2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@id/textView2"
+        android:layout_marginBottom="80dp"
+        android:text="N/A"/>
+
+    <TextView
+        android:id="@+id/dayaftertomorrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/textView3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@id/textView3"
+        android:layout_marginBottom="80dp"
+        android:text="N/A"/>
+
+    <ImageView
+        android:id="@+id/todayconditionView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_toEndOf="@+id/todayconditiontxt"
+        android:layout_toRightOf="@+id/todayconditiontxt"
+        android:src="@drawable/cond100"/>
+
+    <ImageView
+        android:id="@+id/tomorrowconditionView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_toEndOf="@+id/tomorrowconditiontxt"
+        android:layout_toRightOf="@+id/tomorrowconditiontxt"
+        android:src="@drawable/cond100"/>
+
+    <ImageView
+        android:id="@+id/afterconditionView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_toEndOf="@+id/afterconditiontxt"
+        android:layout_toRightOf="@+id/afterconditiontxt"
+        android:src="@drawable/cond100"/>
+
+    <TextView
+        android:id="@+id/todayconditiontxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="110dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
+        android:text="N/A"/>
+
+    <TextView
+        android:id="@+id/tomorrowconditiontxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="110dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginStart="150dp"
+        android:text="N/A"/>
+
+    <TextView
+        android:id="@+id/afterconditiontxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="110dp"
+        android:layout_marginLeft="250dp"
+        android:layout_marginStart="250dp"
+        android:text="N/A"/>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menubutton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:menu_colorNormal="@color/colorPrimary"
+        app:menu_colorPressed="@color/colorAccent"
+        app:menu_colorRipple="@color/colorTitle"
+        app:menu_icon="@drawable/ic_settings_white_24dp"
+        app:menu_fab_label="选项">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorPrimary"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorTitle"
+            app:fab_label="更新天气"
+            android:src="@drawable/ic_autorenew_white_24dp"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/switchcity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorPrimary"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorTitle"
+            app:fab_label="切换城市"
+            android:src="@drawable/ic_swap_horiz_white_24dp"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/addcity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorPrimary"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorTitle"
+            app:fab_label="添加城市"
+            android:src="@drawable/ic_add_white_24dp"
+            app:fab_size="mini"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</RelativeLayout>
