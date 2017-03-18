@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String degree = "℃";
     private long exitTime = 0;
     private RelativeLayout parentLayout;
-
+    //浮动按钮
     private FloatingActionMenu menubutton;
     private FloatingActionButton refresh;
     private FloatingActionButton switchcity;
