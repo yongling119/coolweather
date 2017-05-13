@@ -120,6 +120,7 @@ public class ChooseCityActivity extends AppCompatActivity {
         }
     }
 
+    //处理后退逻辑
     @Override
     public void onBackPressed() {
         if (CURRENT_LEVEL == QUERY_LEVEL) {

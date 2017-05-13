@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:padding="10dp"
-        android:text="已选城市"
+        android:text="收藏城市"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="40sp"/>
@@ -26,20 +26,23 @@
         android:layout_below="@id/chosenCity"
         android:layout_centerHorizontal="true"/>
 
-    <com.github.clans.fab.FloatingActionButton
+    <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/addcityButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:src="@drawable/ic_add_white_24dp"
-        app:fab_colorDisabled="@color/colorTitle"
-        app:fab_colorNormal="@color/colorPrimary"
-        app:fab_colorPressed="@color/colorAccent"
-        app:fab_label="添加城市"
-        app:fab_size="normal"/>
+        android:scaleType="fitCenter"
+        app:menu_colorNormal="@color/colorPrimary"
+        app:menu_colorPressed="@color/colorAccent"
+        app:menu_colorRipple="@color/colorTitle"
+        app:menu_fab_label="选项"
+        app:menu_icon="@drawable/setup">
+
+    </com.github.clans.fab.FloatingActionMenu>
+
 </RelativeLayout>

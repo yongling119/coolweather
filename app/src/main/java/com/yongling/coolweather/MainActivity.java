@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton refresh;
     private FloatingActionButton switchcity;
     private FloatingActionButton addcity;
+    private FloatingActionButton gotochosenlist;
 
 
     @Override
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("selected", false)) {
             CITY = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("city", null);
             new QueryWeatherTask().execute(QUERYPATH + CITY + APPKEY);
+            //Toast.makeText(MainActivity.this,"测试",Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(MainActivity.this, ChooseCityActivity.class);
             startActivity(intent);
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         refresh = (FloatingActionButton) findViewById(R.id.refresh);
         switchcity = (FloatingActionButton) findViewById(R.id.switchcity);
         addcity = (FloatingActionButton) findViewById(R.id.addcity);
+        gotochosenlist = (FloatingActionButton)findViewById(R.id.gotochsoenlist);
 
         menubutton.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         refresh.setOnClickListener(this);
         switchcity.setOnClickListener(this);
         addcity.setOnClickListener(this);
+        gotochosenlist.setOnClickListener(this);
 
         menubutton.setClosedOnTouchOutside(true);
     }
@@ -110,10 +115,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //finish();
                 break;
             case R.id.addcity:
-                //Intent intent1 = new Intent(MainActivity.this,AddCityActivity.class);
-                //menubutton.close(true);
-                //startActivity(intent1);
+                saveChosenCity(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("city", ""));
+                Intent intent1 = new Intent(MainActivity.this, AddCityActivity.class);
+                menubutton.close(true);
+                startActivity(intent1);
                 break;
+            case R.id.gotochsoenlist:
+                Intent intent2 = new Intent(MainActivity.this, AddCityActivity.class);
+                menubutton.close(true);
+                startActivity(intent2);
         }
     }
 
@@ -137,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             WeatherInfo2 weatherInfo = JsonParser.parserWeatherQuery(s);
             saveWeatherInfo(weatherInfo);
             displayWeather();
-            saveChosenCity(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("city",""));
         }
 
         @Override
@@ -251,12 +260,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.apply();
     }
 
-    public void saveChosenCity(String city){
+    public void saveChosenCity(String city) {
         DBManager dbManager = new DBManager(getApplicationContext());
         dbManager.insertChosenCity(city);
 
     }
 
+    //再按一次退出
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
