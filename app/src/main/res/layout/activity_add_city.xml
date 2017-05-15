@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"/>
 
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/addcityButton"
+        android:id="@+id/editcityButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
@@ -42,6 +42,18 @@
         app:menu_colorRipple="@color/colorTitle"
         app:menu_fab_label="选项"
         app:menu_icon="@drawable/setup">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/delcity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@drawable/enter"
+            app:fab_colorNormal="@color/colorPrimary"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorTitle"
+            app:fab_label="删除城市"
+            app:fab_size="mini"/>
 
     </com.github.clans.fab.FloatingActionMenu>
 

@@ -1,5 +1,6 @@
 package com.yongling.coolweather;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener {
 
     private TextView city, tmpnow, conditiontxt, updatetime, today, tomorrow, dayaftertomorrow, todayconditiontxt, tomorrowconditiontxt,
             afterconditiontxt;

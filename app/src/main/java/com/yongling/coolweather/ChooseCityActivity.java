@@ -1,5 +1,6 @@
 package com.yongling.coolweather;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -19,7 +20,7 @@ import com.yongling.coolweather.HttpUtils.Httpdownload;
 import com.yongling.coolweather.JsonUtils.JsonParser;
 
 
-public class ChooseCityActivity extends AppCompatActivity {
+public class ChooseCityActivity extends Activity {
 
     private ListView listView;
     private SimpleCursorAdapter adapter;
@@ -37,7 +38,7 @@ public class ChooseCityActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView = (TextView) view;
+                TextView textView = (TextView) view.findViewById(R.id.choose_prov);
                 if (CURRENT_LEVEL == QUERY_LEVEL) {
                     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
                     editor.putBoolean("selected", true);
@@ -128,7 +129,7 @@ public class ChooseCityActivity extends AppCompatActivity {
             new QueryCitylistTask().execute();
         } else if (CURRENT_LEVEL == CITY_LEVEL && !PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean
                 ("selected", false)) {
-            Toast.makeText(this,"请选择想要查询的城市！",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "请选择想要查询的城市！", Toast.LENGTH_LONG).show();
         } else {
             super.onBackPressed();
         }

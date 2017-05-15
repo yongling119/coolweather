@@ -6,16 +6,24 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/choose_prov"
+        android:id="@+id/choose_del"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
         android:padding="10dp"
         android:text="prov"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:layout_weight="3"/>
 
+    <Button
+        android:id="@+id/delbutton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="删除"
+        android:layout_weight="1"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp"/>
 </LinearLayout>
 
 
