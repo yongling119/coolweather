@@ -24,6 +24,7 @@ public class ChooseCityActivity extends Activity {
 
     private ListView listView;
     private SimpleCursorAdapter adapter;
+    private String flag;
     private static final int PROV_LEVEL = 1;
     private static final int CITY_LEVEL = 2;
     private static final int QUERY_LEVEL = 3;
@@ -34,23 +35,40 @@ public class ChooseCityActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_city);
+        flag = getIntent().getStringExtra("flag");
         listView = (ListView) this.findViewById(R.id.citylist);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView textView = (TextView) view.findViewById(R.id.choose_prov);
-                if (CURRENT_LEVEL == QUERY_LEVEL) {
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-                    editor.putBoolean("selected", true);
-                    editor.putString("city", textView.getText().toString());
-                    editor.apply();
-                    CURRENT_LEVEL = 1;
-                    Intent intent = new Intent(ChooseCityActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+
+                if (!flag.equals("addmorecity")) {
+                    if (CURRENT_LEVEL == QUERY_LEVEL) {
+                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                        editor.putBoolean("selected", true);
+                        editor.putString("city", textView.getText().toString());
+                        editor.apply();
+                        CURRENT_LEVEL = PROV_LEVEL;
+                        Intent intent = new Intent(ChooseCityActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        new QueryCitylistTask().execute(textView.getText().toString());
+                    }
                 } else {
-                    new QueryCitylistTask().execute(textView.getText().toString());
+                    if (CURRENT_LEVEL == QUERY_LEVEL) {
+                        CURRENT_LEVEL = PROV_LEVEL;
+                        DBManager manager = new DBManager(ChooseCityActivity.this);
+                        manager.insertChosenCity(textView.getText().toString());
+                        Intent intent = new Intent(ChooseCityActivity.this, AddCityActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        new QueryCitylistTask().execute(textView.getText().toString());
+                    }
+
                 }
+
             }
         });
         loadCityList();
@@ -130,6 +148,10 @@ public class ChooseCityActivity extends Activity {
         } else if (CURRENT_LEVEL == CITY_LEVEL && !PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean
                 ("selected", false)) {
             Toast.makeText(this, "请选择想要查询的城市！", Toast.LENGTH_LONG).show();
+        } else if (flag.equals("addmorecity")) {
+            Intent intent = new Intent(ChooseCityActivity.this, AddCityActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             super.onBackPressed();
         }

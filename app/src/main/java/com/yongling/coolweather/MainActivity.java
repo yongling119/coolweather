@@ -3,13 +3,9 @@ package com.yongling.coolweather;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,15 +15,12 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.yongling.coolweather.DB.DBHelper;
 import com.yongling.coolweather.DB.DBManager;
 import com.yongling.coolweather.HttpUtils.Httpdownload;
 import com.yongling.coolweather.JsonUtils.JsonParser;
-import com.yongling.coolweather.model.WeatherInfo;
 import com.yongling.coolweather.model.WeatherInfo2;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -56,19 +49,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setConditionmap();
-        init();
+        initUI();
         setFloatingMenu();
-
-        //判断是否已经选择了城市，没有则转到ChooseCity，如果是从Choosecity转过来，则利用sharePreference中的city直接查天气
-        if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("selected", false)) {
-            CITY = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("city", null);
-            new QueryWeatherTask().execute(QUERYPATH + CITY + APPKEY);
-            //Toast.makeText(MainActivity.this,"测试",Toast.LENGTH_SHORT).show();
-        } else {
-            Intent intent = new Intent(MainActivity.this, ChooseCityActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        queryWeather();
 
     }
 
@@ -78,7 +61,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         refresh = (FloatingActionButton) findViewById(R.id.refresh);
         switchcity = (FloatingActionButton) findViewById(R.id.switchcity);
         addcity = (FloatingActionButton) findViewById(R.id.addcity);
-        gotochosenlist = (FloatingActionButton)findViewById(R.id.gotochsoenlist);
+        gotochosenlist = (FloatingActionButton) findViewById(R.id.gotochsoenlist);
 
         menubutton.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
@@ -111,15 +94,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.switchcity:
                 Intent intent = new Intent(MainActivity.this, ChooseCityActivity.class);
+                intent.putExtra("flag","switch");
                 menubutton.close(true);
                 startActivity(intent);
                 //finish();
                 break;
             case R.id.addcity:
                 saveChosenCity(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("city", ""));
-                Intent intent1 = new Intent(MainActivity.this, AddCityActivity.class);
+                //Intent intent1 = new Intent(MainActivity.this, AddCityActivity.class);
+                Toast.makeText(MainActivity.this,"已添加至收藏列表！",Toast.LENGTH_SHORT).show();
                 menubutton.close(true);
-                startActivity(intent1);
+                //startActivity(intent1);
                 break;
             case R.id.gotochsoenlist:
                 Intent intent2 = new Intent(MainActivity.this, AddCityActivity.class);
@@ -213,7 +198,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     //初始化UI控件
-    public void init() {
+    public void initUI() {
         city = (TextView) this.findViewById(R.id.city);
         tmpnow = (TextView) this.findViewById(R.id.tmpnow);
         conditiontxt = (TextView) this.findViewById(R.id.conditiontxt);
@@ -242,6 +227,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong("sysupdatetime", System.currentTimeMillis());
         editor.putBoolean("selected", true);
+        editor.putString("lastcity", preferences.getString("city", "random"));
         editor.putString("city", info.getBasic().getCity());
         editor.putString("condition", info.getNow().getCond().getCode());
         editor.putString("condition2", info.getDaily_forecast().get(1).getCond().getCode_d());
@@ -265,6 +251,35 @@ public class MainActivity extends Activity implements View.OnClickListener {
         DBManager dbManager = new DBManager(getApplicationContext());
         dbManager.insertChosenCity(city);
 
+    }
+
+    public void queryWeather() {
+        //判断是否已经选择了城市，初次安装则转到ChooseCity，如果是从Choosecity和addCity转过来，则利用sharePreference中的city和sysupdatetime
+        // 判断网络查天气还是已是最新天气（一小时更新一次）
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (preferences.getBoolean("selected", false)) {
+            long gap = System.currentTimeMillis() - preferences.getLong("sysupdatetime", 0);
+            if (gap > 3600000 || !preferences.getString("city", "city").equals(preferences.getString("lastcity", "randomcity"))) {
+                CITY = preferences.getString("city", null);
+                new QueryWeatherTask().execute(QUERYPATH + CITY + APPKEY);
+                Toast.makeText(MainActivity.this, "正在更新天气", Toast.LENGTH_SHORT).show();
+            } else {
+                displayWeather();
+                Toast.makeText(MainActivity.this, "已是最新天气," + gap / 60000 + "分钟前更新", Toast.LENGTH_SHORT).show();
+            }
+            //Toast.makeText(MainActivity.this,"测试",Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(MainActivity.this, ChooseCityActivity.class);
+            intent.putExtra("flag","query");
+            startActivity(intent);
+            //finish();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        queryWeather();
     }
 
     //再按一次退出

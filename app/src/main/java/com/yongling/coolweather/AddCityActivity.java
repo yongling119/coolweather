@@ -29,7 +29,7 @@ public class AddCityActivity extends Activity implements View.OnClickListener {
 
     private ListView chosenCityList;
     private FloatingActionMenu floatingActionMenu;
-    private FloatingActionButton delButton;
+    private FloatingActionButton delButton, addButton;
     private SimpleCursorAdapter adapter;
     private ArrayList<String> selectlist = new ArrayList<>();
     private ArrayList<String> addlist = new ArrayList<>();
@@ -97,6 +97,13 @@ public class AddCityActivity extends Activity implements View.OnClickListener {
                 builder.create().show();
                 floatingActionMenu.toggle(true);
                 break;
+            case R.id.addmorecity:
+                Intent intent = new Intent(AddCityActivity.this,ChooseCityActivity.class);
+                intent.putExtra("flag","addmorecity");
+                startActivity(intent);
+                floatingActionMenu.toggle(true);
+                finish();
+                break;
         }
     }
 
@@ -130,8 +137,10 @@ public class AddCityActivity extends Activity implements View.OnClickListener {
     public void setFloatingButton() {
         floatingActionMenu = (FloatingActionMenu) this.findViewById(R.id.editcityButton);
         delButton = (FloatingActionButton) this.findViewById(R.id.delcity);
+        addButton = (FloatingActionButton) this.findViewById(R.id.addmorecity);
 
         delButton.setOnClickListener(this);
+        addButton.setOnClickListener(this);
 
         floatingActionMenu.setClosedOnTouchOutside(true);
     }
